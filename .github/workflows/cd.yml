@@ -1,22 +1,20 @@
-name: CD Pipeline
-
+name: Deploy React App
 on:
   push:
     branches: [main]
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:  # 👈 Add this block
-      contents: write  # Allows pushing to gh-pages
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
       - run: npm install
       - run: npm run build
       - uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # This is auto-generated
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
+          enable_jekyll: false
+          cname: aminerhayem123.github.io/my-counter-app
